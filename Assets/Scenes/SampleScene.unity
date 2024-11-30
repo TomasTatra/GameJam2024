@@ -172,7 +172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 481357495755477360, guid: d9fc474109f0db445a20018825cf42e8, type: 3}
       propertyPath: speed
-      value: 200
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 481357495755477360, guid: d9fc474109f0db445a20018825cf42e8, type: 3}
       propertyPath: jumpHigh
@@ -185,6 +185,10 @@ PrefabInstance:
     - target: {fileID: 481357495755477360, guid: d9fc474109f0db445a20018825cf42e8, type: 3}
       propertyPath: jumpBuffer
       value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 481357495755477360, guid: d9fc474109f0db445a20018825cf42e8, type: 3}
+      propertyPath: jumpFraction
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 865750445731939131, guid: d9fc474109f0db445a20018825cf42e8, type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.size
