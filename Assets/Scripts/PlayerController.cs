@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
                 _body.gravityScale = gravity;
             }
             float direction = _body.velocity.x;
-            direction = direction > 0 ? 1 : -1;
+            direction = spriteRenderer.flipX ? -1 : 1;
             _body.velocity = new Vector2(direction * dashSpeed, 0);
             return;
         }
@@ -226,7 +226,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (context.started && dash && !dashCall && chargedDash && _body.velocity.x != 0)
+        if (context.started && dash && !dashCall && chargedDash)
         {
             dashCall = true;
             dashDuration = dashTime;
