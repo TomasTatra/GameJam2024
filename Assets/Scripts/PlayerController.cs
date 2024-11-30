@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,23 +14,40 @@ public class PlayerController : MonoBehaviour
     private double recentlyTouched = 0;
     private double recentlyJumped = 0;
 
+    public Camera camera = null;
+
+
+    [Header("Base Movement")]
     public float speed = 4;
     public float jumpHigh = 9;
     public float coyoteTime = 1; //0.7
     public float jumpBuffer = 1; //0.7
+    [Space(10)]
+
+    [Header("Small jump tween")]
     public float jumpVelocityCut = 2;
     public float jumpCutMulltiplier = 2;
     public float jumpForce = 40;
     public float jumpFraction = 8;
+    [Space(10)]
+
+    [Header("Small camera tween")]
+    public float time = 1;
 
 
     void Awake()
     {
         _body = GetComponent<Rigidbody2D>();
+        if (camera == null)
+        {
+            throw new System.Exception("Camera on Player is missing.");
+        }
     }
 
     void Update()
     {
+        //camera.transform.position = new Vector3(_body.transform.position.x, _body.transform.position.y, -10);
+        camera.transform.DOMove(new Vector3(_body.transform.position.x, _body.transform.position.y, -10), 1);
         recentlyJumped -= Time.deltaTime;
         recentlyTouched -= Time.deltaTime;
 
@@ -38,15 +56,16 @@ public class PlayerController : MonoBehaviour
 
         if (_body.velocity.y > -jumpVelocityCut && _body.velocity.y < 0)
             _body.velocity = new Vector2(_body.velocity.x, _body.velocity.y * jumpCutMulltiplier);
-
-        if (recentlyJumped > 0)
-            Jump();
-
+        
         if (_body.velocity.y == 0)
         {
             recentlyTouched = coyoteTime;
             _body.velocity = new Vector2(dir * speed, _body.velocity.y);
         }
+
+        if (recentlyJumped > 0)
+            Jump();
+        
         else if (dir != 0)
         {
              _body.AddForce(new Vector2(dir * jumpForce, 0));
