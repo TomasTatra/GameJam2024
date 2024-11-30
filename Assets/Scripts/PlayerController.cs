@@ -156,8 +156,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (dashCall)
-            return;
         Vector2 direction = context.ReadValue<Vector2>();
         if (direction.x < 0)
         {
