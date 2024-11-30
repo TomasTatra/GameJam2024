@@ -220,3 +220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1346aad57c0f3334cb99bbb26b9eb9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  body: {fileID: 8872171337192326892}
+  speed: 100
+  jumpHigh: 4
+  coyoteTime: 2
+  jumpBuffer: 2
