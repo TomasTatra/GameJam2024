@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerController : MonoBehaviour
 {
     private int dir = 0;
     private bool jumping = false;
     private Rigidbody2D _body;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
     private double recentlyTouched = 0;
     private double recentlyJumped = 0;
@@ -37,7 +40,10 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         _body = GetComponent<Rigidbody2D>();
+        
         if (camera == null)
         {
             throw new System.Exception("Camera on Player is missing.");
@@ -103,13 +109,17 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 direction = context.ReadValue<Vector2>();
+        animator.SetFloat("Speed", Mathf.Abs(direction.x));
+        print(direction);
         if (direction.x < 0)
         {
             dir = -1;
+            spriteRenderer.flipX = true;
         }
         else if (direction.x > 0)
         {
             dir = 1;
+            spriteRenderer.flipX = false;
         }
         else
         {
