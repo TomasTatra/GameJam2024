@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private int dir = 0;
     private bool jumping = false;
     private Rigidbody2D _body;
+    private bool lastFrameZero = false;
 
     private double recentlyTouched = 0;
     private double recentlyJumped = 0;
@@ -33,6 +34,13 @@ public class PlayerController : MonoBehaviour
 
     [Header("Small camera tween")]
     public float time = 1;
+    [Space(10)]
+
+    [Header("Special powers")]
+    public bool doubleJump = false;
+    public bool dash = false;
+    public bool strike = false;
+    private bool charged = false;
 
 
     void Awake()
@@ -46,8 +54,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //camera.transform.position = new Vector3(_body.transform.position.x, _body.transform.position.y, -10);
-        camera.transform.DOMove(new Vector3(_body.transform.position.x, _body.transform.position.y, -10), 1);
+        camera.transform.position = new Vector3(_body.transform.position.x, _body.transform.position.y, -10);
+        //camera.transform.DOMove(new Vector3(_body.transform.position.x, _body.transform.position.y, -10), 1);
         recentlyJumped -= Time.deltaTime;
         recentlyTouched -= Time.deltaTime;
 
@@ -56,23 +64,29 @@ public class PlayerController : MonoBehaviour
 
         if (_body.velocity.y > -jumpVelocityCut && _body.velocity.y < 0)
             _body.velocity = new Vector2(_body.velocity.x, _body.velocity.y * jumpCutMulltiplier);
-        
+
+        if (lastFrameZero && _body.velocity.y == 0)
+            recentlyTouched = coyoteTime;
+
         if (_body.velocity.y == 0)
         {
-            recentlyTouched = coyoteTime;
+            lastFrameZero = true;
             _body.velocity = new Vector2(dir * speed, _body.velocity.y);
         }
+        else
+            lastFrameZero = false;
 
         if (recentlyJumped > 0)
             Jump();
-        
+
         else if (dir != 0)
         {
-             _body.AddForce(new Vector2(dir * jumpForce, 0));
+            _body.AddForce(new Vector2(dir * jumpForce, 0));
             if (_body.velocity.x > speed)
             {
                 _body.velocity = new Vector2(speed, _body.velocity.y);
-            } else if (_body.velocity.x < -speed)
+            }
+            else if (_body.velocity.x < -speed)
             {
                 _body.velocity = new Vector2(-speed, _body.velocity.y);
             }
@@ -81,11 +95,11 @@ public class PlayerController : MonoBehaviour
         {
             if (_body.velocity.x > 0)
             {
-                _body.AddForce(new Vector2(-jumpForce/ jumpFraction, 0));
+                _body.AddForce(new Vector2(-jumpForce / jumpFraction, 0));
             }
             if (_body.velocity.x < 0)
             {
-                _body.AddForce(new Vector2(jumpForce/ jumpFraction, 0));
+                _body.AddForce(new Vector2(jumpForce / jumpFraction, 0));
             }
         }
     }
@@ -97,6 +111,15 @@ public class PlayerController : MonoBehaviour
             _body.velocity = new Vector2(_body.velocity.x, jumpHigh);
             recentlyJumped = 0;
             recentlyTouched = 0;
+            if (doubleJump)
+                charged = true;
+        }
+        else if (doubleJump && charged)
+        {
+            _body.velocity = new Vector2(_body.velocity.x, jumpHigh);
+            recentlyJumped = 0;
+            recentlyTouched = 0;
+            charged = false;
         }
     }
 
