@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     public bool dash = false;
     public float dashSpeed = 20;
     public float dashTime = 1;
-    public float dashColldown = 3;
+    public float dashColddown = 3;
     private bool chargedDash = true;
     private bool dashCall = false;
     private float dashDuration = 0;
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
     public bool strike = false;
     public float strikeTime = 1;
     private bool strikeCall = false;
-    public float strikeColldown = 3;
+    public float strikeColddown = 3;
     private float strikeDuration = 0;
     private float strikeReset = 0;
     private bool chargedStrike = true;
@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
             if (_body.velocity == new Vector2(0, 0) || dashDuration < 0)
             { 
                 dashCall = false;
-                dashReset = dashColldown;
+                dashReset = dashColddown;
                 _body.gravityScale = gravity;
             }
             return;
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
             if (strikeDuration < 0)
             {
                 strikeCall = false;
-                strikeReset = strikeColldown;
+                strikeReset = strikeColddown;
                 _body.gravityScale = gravity;
             }
             return;
