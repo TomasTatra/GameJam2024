@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private bool jumping = false;
     private double recentlyTouched = 0;
     private double recentlyJumped = 0;
-    private bool lastFrameZero = false; 
+    private float timeOnGround = 0; 
     public float speed = 4;
     public float jumpHigh = 9;
     public float coyoteTime = 1; //0.7
@@ -39,18 +39,28 @@ public class PlayerController : MonoBehaviour
     [Space(10)]
 
     [Header("Special powers")]
+    public float timeToRestartAbilities = 1;
+    [Space(5)]
     public bool doubleJump = false;
+    private bool chargedDouble = true;
     [Space(5)]
     public bool dash = false;
     public float dashSpeed = 20;
     public float dashTime = 1;
     public float dashColldown = 3;
-    [Space(10)]
-    public bool strike = false;
-    private bool charged = true;
+    private bool chargedDash = true;
     private bool dashCall = false;
     private float dashDuration = 0;
     private float dashReset = 0;
+    [Space(10)]
+    public bool strike = false;
+    public float strikeTime = 1;
+    private bool strikeCall = false;
+    public float strikeColldown = 3;
+    private float strikeDuration = 0;
+    private float strikeReset = 0;
+    private bool chargedStrike = true;
+
 
 
     void Awake()
@@ -73,15 +83,23 @@ public class PlayerController : MonoBehaviour
         recentlyJumped -= Time.deltaTime;
         recentlyTouched -= Time.deltaTime;
         dashDuration -= Time.deltaTime;
+        strikeDuration -= Time.deltaTime;
 
-        if (dash && dashReset > 0)
-        {
-            dashReset -= Time.deltaTime;
-            if (dashReset <= 0)
-                charged = true;
-        }
+        //if (dashReset > 0)
+        //{
+        //    dashReset -= Time.deltaTime;
+        //    if (dashReset <= 0)
+        //        chargedDash = true;
+        //}
 
-        if (dashCall)
+        //if (strikeReset > 0)
+        //{
+        //    strikeReset -= Time.deltaTime;
+        //    if (strikeReset <= 0)
+        //        chargedStrike = true;
+        //}
+
+        if (dashCall && !strikeCall)
         {
             if (_body.velocity == new Vector2(0, 0) || dashDuration < 0)
             { 
@@ -95,22 +113,38 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        if (strikeCall && !dashCall)
+        {
+            if (strikeDuration < 0)
+            {
+                strikeCall = false;
+                strikeReset = strikeColldown;
+                _body.gravityScale = gravity;
+            }
+            _body.velocity = new Vector2(0, 0);
+            return;
+        }
+
         if (_body.velocity.y < jumpVelocityCut && _body.velocity.y > 0)
             _body.velocity = new Vector2(_body.velocity.x, _body.velocity.y / jumpCutMulltiplier);
 
         if (_body.velocity.y > -jumpVelocityCut && _body.velocity.y < 0)
             _body.velocity = new Vector2(_body.velocity.x, _body.velocity.y * jumpCutMulltiplier);
 
-        if (lastFrameZero && _body.velocity.y == 0)
+        if (timeOnGround > timeToRestartAbilities && _body.velocity.y == 0)
+        {
             recentlyTouched = coyoteTime;
-
+            chargedDash = true;
+            chargedDouble = true;
+            chargedStrike = true;
+        }
         if (_body.velocity.y == 0)
         {
-            lastFrameZero = true;
+            timeOnGround += Time.deltaTime;
             _body.velocity = new Vector2(dir * speed, _body.velocity.y);
         }
         else
-            lastFrameZero = false;
+            timeOnGround = 0;
 
         if (recentlyJumped > 0)
             Jump();
@@ -142,22 +176,20 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if (dashCall)
+        if (dashCall || strikeCall)
             return;
         if (_body.velocity.y == 0 || _body.velocity.y < 0 && recentlyTouched > 0)
         {
             _body.velocity = new Vector2(_body.velocity.x, jumpHigh);
             recentlyJumped = 0;
             recentlyTouched = 0;
-            if (doubleJump)
-                charged = true;
         }
-        else if (doubleJump && charged)
+        else if (doubleJump && chargedDouble)
         {
             _body.velocity = new Vector2(_body.velocity.x, jumpHigh);
             recentlyJumped = 0;
             recentlyTouched = 0;
-            charged = false;
+            chargedDouble = false;
         }
     }
 
@@ -184,7 +216,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (dashCall)
+        if (dashCall || strikeCall)
             return;
         if (context.started)
         {
@@ -194,12 +226,29 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (context.started && dash && !dashCall && charged && _body.velocity.x != 0)
+        if (context.started && dash && !dashCall && chargedDash && _body.velocity.x != 0)
         {
             dashCall = true;
             dashDuration = dashTime;
-            charged = false;
+            chargedDash = false;
             _body.gravityScale = 0;
         }
+    }
+
+    public void OnStrike(InputAction.CallbackContext context)
+    {
+        if (context.started && strike && !strikeCall && chargedStrike)
+        {
+            strikeCall = true;
+            strikeDuration = strikeTime;
+            chargedStrike = false;
+            _body.gravityScale = 0;
+            Fire();
+        }
+    }
+
+    private void Fire()
+    {
+        return;
     }
 }
