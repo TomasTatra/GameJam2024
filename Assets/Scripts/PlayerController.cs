@@ -101,27 +101,27 @@ public class PlayerController : MonoBehaviour
 
         if (dashCall && !strikeCall)
         {
+            float direction = _body.velocity.x;
+            direction = spriteRenderer.flipX ? -1 : 1;
+            _body.velocity = new Vector2(direction * dashSpeed, 0);
             if (_body.velocity == new Vector2(0, 0) || dashDuration < 0)
             { 
                 dashCall = false;
                 dashReset = dashColldown;
                 _body.gravityScale = gravity;
             }
-            float direction = _body.velocity.x;
-            direction = spriteRenderer.flipX ? -1 : 1;
-            _body.velocity = new Vector2(direction * dashSpeed, 0);
             return;
         }
 
         if (strikeCall && !dashCall)
         {
+            _body.velocity = new Vector2(0, 0);
             if (strikeDuration < 0)
             {
                 strikeCall = false;
                 strikeReset = strikeColldown;
                 _body.gravityScale = gravity;
             }
-            _body.velocity = new Vector2(0, 0);
             return;
         }
 
@@ -195,6 +195,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (strikeCall || dashCall)
+            return;
         Vector2 direction = context.ReadValue<Vector2>();
         animator.SetFloat("Speed", Mathf.Abs(direction.x));
         print(direction);
