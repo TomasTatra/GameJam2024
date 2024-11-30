@@ -13,10 +13,14 @@ public class PlayerController : MonoBehaviour
     private double recentlyTouched = 0;
     private double recentlyJumped = 0;
 
-    public float speed = 250;
-    public float jumpHigh = 10;
-    public float coyoteTime = 2;
-    public float jumpBuffer = 2;
+    public float speed = 4;
+    public float jumpHigh = 9;
+    public float coyoteTime = 1; //0.7
+    public float jumpBuffer = 1; //0.7
+    public float jumpVelocityCut = 2;
+    public float jumpCutMulltiplier = 2;
+    public float jumpForce = 40;
+    public float jumpFraction = 8;
 
 
     void Awake()
@@ -29,14 +33,42 @@ public class PlayerController : MonoBehaviour
         recentlyJumped -= Time.deltaTime;
         recentlyTouched -= Time.deltaTime;
 
+        if (_body.velocity.y < jumpVelocityCut && _body.velocity.y > 0)
+            _body.velocity = new Vector2(_body.velocity.x, _body.velocity.y / jumpCutMulltiplier);
+
+        if (_body.velocity.y > -jumpVelocityCut && _body.velocity.y < 0)
+            _body.velocity = new Vector2(_body.velocity.x, _body.velocity.y * jumpCutMulltiplier);
+
         if (recentlyJumped > 0)
             Jump();
 
         if (_body.velocity.y == 0)
+        {
             recentlyTouched = coyoteTime;
-
-        _body.velocity = speed * Time.deltaTime * new Vector2(dir, 0) + new Vector2(0, _body.velocity.y);
-        
+            _body.velocity = new Vector2(dir * speed, _body.velocity.y);
+        }
+        else if (dir != 0)
+        {
+             _body.AddForce(new Vector2(dir * jumpForce, 0));
+            if (_body.velocity.x > speed)
+            {
+                _body.velocity = new Vector2(speed, _body.velocity.y);
+            } else if (_body.velocity.x < -speed)
+            {
+                _body.velocity = new Vector2(-speed, _body.velocity.y);
+            }
+        }
+        else
+        {
+            if (_body.velocity.x > 0)
+            {
+                _body.AddForce(new Vector2(-jumpForce/ jumpFraction, 0));
+            }
+            if (_body.velocity.x < 0)
+            {
+                _body.AddForce(new Vector2(jumpForce/ jumpFraction, 0));
+            }
+        }
     }
 
     private void Jump()
