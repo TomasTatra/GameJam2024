@@ -208,7 +208,19 @@ MonoBehaviour:
     m_ActionId: c53f3462-836b-41f8-969f-1e507cde2173
     m_ActionName: Character/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9117689026545189666}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: fdc515f4-2ae3-434f-a558-de5a4334d18d
     m_ActionName: Character/Dash[/Keyboard/leftShift]
   - m_PersistentCalls:
@@ -242,3 +254,8 @@ MonoBehaviour:
   jumpForce: 40
   jumpFraction: 8
   time: 1
+  doubleJump: 0
+  dash: 0
+  dashSpeed: 8
+  dashTime: 2
+  strike: 0
