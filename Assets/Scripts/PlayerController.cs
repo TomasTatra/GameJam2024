@@ -11,8 +11,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _body;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-    private double recentlyTouched = 0;
-    private double recentlyJumped = 0;
 
     public Camera camera = null;
 
