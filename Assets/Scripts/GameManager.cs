@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerController _playerController;
 
+    private SoundtrackManager _soundtrackManager;
 
     public static GameManager Instance { get; private set; }
 
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        _soundtrackManager = Object.FindAnyObjectByType<SoundtrackManager>();
     }
 
     public void FirstStateChanged(InputAction.CallbackContext context)
@@ -95,6 +97,7 @@ public class GameManager : MonoBehaviour
     {
         UpdateTileMaps();
         UpdateCharacterSkills();
+        _soundtrackManager.SwitchToWorld(index);
     }
 
     private void UpdateCharacterSkills()

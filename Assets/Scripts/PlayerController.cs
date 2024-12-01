@@ -322,6 +322,7 @@ public class PlayerController : MonoBehaviour
 
     public void KillPlayer()
     {
+        if (!_alive) return;
         _alive = false;
         TurnOffCamera();
     }
@@ -336,13 +337,13 @@ public class PlayerController : MonoBehaviour
         if (_alive)
             return;
 
-        _fadeTween.FadeIn(Respawn, fadeTime);
+        if(_fadeTween) _fadeTween.FadeIn(Respawn, fadeTime);
     }
 
     private void Respawn()
     {
         _body.position = _lastCheckpoint;
         _alive = true;
-        _fadeTween.FadeOut(fadeTime);
+        if (_fadeTween) _fadeTween.FadeOut(fadeTime);
     }
 }
