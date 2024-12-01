@@ -1,10 +1,6 @@
-using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
+using MarkusSecundus.Utils.Behaviors.Cosmetics;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,17 +10,24 @@ public class PlayerController : MonoBehaviour
 
     public Camera camera = null;
 
+    [Header("Fading screen and respawning")]
+    public float fadeTime = 0.33f;
+    public bool _alive = false;
+    [SerializeField] private FadeEffect _fadeTween;
+    private Vector2 _lastCheckpoint;
+    [Space(10)]
+
     [Header("Base Movement")]
-    private int dir = 0;
-    private bool jumping = false;
-    private double recentlyTouched = 0;
-    private double recentlyJumped = 0;
-    private float timeOnGround = 0; 
     public float speed = 4;
     public float jumpHigh = 9;
     public float coyoteTime = 1; //0.7
     public float jumpBuffer = 1; //0.7
     public float gravity = 1;
+    private int dir = 0;
+    private bool jumping = false;
+    private double recentlyTouched = 0;
+    private double recentlyJumped = 0;
+    private float timeOnGround = 0;
     [Space(10)]
 
     [Header("Small jump tween")]
@@ -60,8 +63,6 @@ public class PlayerController : MonoBehaviour
     private float strikeDuration = 0;
     private float strikeReset = 0;
     private bool chargedStrike = true;
-
-
 
     void Awake()
     {
@@ -195,7 +196,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (strikeCall || dashCall)
+        if (_alive && strikeCall || dashCall)
             return;
         Vector2 direction = context.ReadValue<Vector2>();
         animator.SetFloat("Speed", Mathf.Abs(direction.x));
@@ -218,7 +219,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (dashCall || strikeCall)
+        if (_alive && dashCall || strikeCall)
             return;
         if (context.started)
         {
@@ -228,7 +229,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (context.started && dash && !dashCall && chargedDash)
+        if (_alive && context.started && dash && !dashCall && chargedDash)
         {
             dashCall = true;
             dashDuration = dashTime;
@@ -239,7 +240,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnStrike(InputAction.CallbackContext context)
     {
-        if (context.started && strike && !strikeCall && chargedStrike)
+        if (_alive && context.started && strike && !strikeCall && chargedStrike)
         {
             strikeCall = true;
             strikeDuration = strikeTime;
@@ -248,9 +249,34 @@ public class PlayerController : MonoBehaviour
             Fire();
         }
     }
-
     private void Fire()
     {
         return;
+    }
+
+    public void KillPlayer()
+    {
+        _alive = false;
+        TurnOffCamera();
+    }
+
+    public void SetLastCheckpoint(Vector2 position)
+    {
+        _lastCheckpoint = new Vector2(position.x, position.y);
+    }
+
+    private void TurnOffCamera()
+    {
+        if (_alive)
+            return;
+
+        _fadeTween.FadeIn(Respawn, fadeTime);
+    }
+
+    private void Respawn()
+    {
+        _body.position = _lastCheckpoint;
+        _alive = true;
+        _fadeTween.FadeOut(fadeTime);
     }
 }

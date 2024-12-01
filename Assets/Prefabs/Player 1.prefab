@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3145725950562135789}
   m_Layer: 0
   m_Name: Player 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -257,7 +257,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1346aad57c0f3334cb99bbb26b9eb9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _alive: 0
   camera: {fileID: 0}
+  fadeTween: {fileID: 0}
+  fadeTime: 0.33
   speed: 4
   jumpHigh: 9
   coyoteTime: 0.7
@@ -268,14 +271,15 @@ MonoBehaviour:
   jumpForce: 40
   jumpFraction: 8
   time: 1
+  timeToRestartAbilities: 1
   doubleJump: 1
   dash: 1
   dashSpeed: 8
   dashTime: 2
-  dashColldown: 3
+  dashColddown: 3
   strike: 1
   strikeTime: 1
-  strikeColldown: 3
+  strikeColddown: 3
 --- !u!95 &3145725950562135789
 Animator:
   serializedVersion: 5
