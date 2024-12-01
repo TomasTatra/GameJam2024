@@ -15,10 +15,8 @@ public class BreakableBlocks : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        print("get in");
         if (collision.gameObject.CompareTag("Projectile")) // shoulld be projectile later
         {
-            print("yes");
             Vector3 impactPoint = Vector3.zero;
             List<ContactPoint2D> contactPoints = new List<ContactPoint2D>();
             collision.GetContacts(contactPoints);
