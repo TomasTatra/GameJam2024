@@ -262,6 +262,7 @@ public class PlayerController : MonoBehaviour
 
     public void KillPlayer()
     {
+        if (!_alive) return;
         _alive = false;
         TurnOffCamera();
     }
