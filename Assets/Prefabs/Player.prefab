@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3145725950562135789}
   - component: {fileID: 5697359018694804793}
   m_Layer: 0
-  m_Name: Player 1
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -1158745268, guid: f72fb2c0780749c4597e701155c81de5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -205,6 +205,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: cbe18e7a-9717-4392-a626-8744e25514ff
     m_ActionName: Character/Attack
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: StateChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6f40f5ee-e788-45af-8cae-bfe6e8fe8c08
+    m_ActionName: Character/ChangeState[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Character
@@ -224,26 +240,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 0}
   fadeTime: 0.33
-  _alive: 0
+  _alive: 1
   _fadeTween: {fileID: 0}
-  speed: 4
-  jumpHigh: 9
-  coyoteTime: 0.7
-  jumpBuffer: 0.7
+  speed: 6
+  jumpHigh: 8
+  coyoteTime: 0.1
+  jumpBuffer: 0.3
   gravity: 1
-  jumpVelocityCut: 2
+  jumpVelocityCut: 3
   jumpCutMulltiplier: 2
-  jumpForce: 40
-  jumpFraction: 8
+  jumpForce: 25
+  jumpFraction: 4
   time: 1
-  timeToRestartAbilities: 0.2
+  timeToRestartAbilities: 0.01
   doubleJump: 1
   dash: 1
-  dashSpeed: 8
-  dashTime: 2
+  dashSpeed: 18
+  dashTime: 0.3
   dashColddown: 3
   strike: 1
   strikeTime: 1
+  strikeOffset: 10
   strikeColddown: 3
   projectilePrefab: {fileID: 3808601583493664672, guid: b69e0c22164862c47803a59c44f78b5f, type: 3}
 --- !u!95 &3145725950562135789
