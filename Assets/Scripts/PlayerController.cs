@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D _body;
     private Animator animator;
+    private int lastAnimation = 0;
     private SpriteRenderer spriteRenderer;
 
     public Camera camera = null;
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        ChangeAnimation();
         camera.transform.position = new Vector3(_body.transform.position.x, _body.transform.position.y, -10);
         //camera.transform.DOMove(new Vector3(_body.transform.position.x, _body.transform.position.y, -10), 1);
         recentlyJumped -= Time.deltaTime;
@@ -176,6 +178,55 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void ChangeAnimation()
+    {
+        int animation = -1;
+        if (dashCall)
+            animation = 1;
+        else if (strikeCall)
+            animation = 2;
+        else if (_body.velocity.y > 0.5)
+            animation = 3;
+        else if (_body.velocity.y < -0.5)
+            animation = 4;
+        else if (_body.velocity.x > 0.5 || _body.velocity.x < -0.5)
+            animation = 5;
+        else
+            animation = 6;
+
+        //if (lastAnimation == animation)
+        //    return;
+
+        lastAnimation = animation;
+        animator.SetBool("Dashing", false);
+        animator.SetBool("Attacking", false);
+        animator.SetBool("Jumping", false);
+        animator.SetBool("Falling", false);
+        animator.SetFloat("Speed", 0);
+
+        switch (lastAnimation)
+        {
+            case 1:
+                animator.SetBool("Dashing", true);
+                break;
+            case 2:
+                animator.SetBool("Attacking", true);
+                break;
+            case 3:
+                animator.SetBool("Jumping", true);
+                break;
+            case 4:
+                animator.SetBool("Falling", true);
+                break;
+            case 5:
+                animator.SetFloat("Speed", 1);
+                break;
+            default:
+                animator.SetFloat("Speed", 0);
+                break;
+        }
+    }
+
     private void Jump()
     {
         if (dashCall || strikeCall)
@@ -200,8 +251,6 @@ public class PlayerController : MonoBehaviour
         if (_alive && (dashCall || strikeCall))
             return;
         Vector2 direction = context.ReadValue<Vector2>();
-        animator.SetFloat("Speed", Mathf.Abs(direction.x));
-        print(direction);
         if (direction.x < 0)
         {
             dir = -1;
