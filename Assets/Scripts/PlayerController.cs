@@ -193,17 +193,14 @@ public class PlayerController : MonoBehaviour
             animation = 1;
         else if (strikeCall)
             animation = 2;
-        else if (_body.velocity.y > 0.5)
+        else if (_body.velocity.y > 2)
             animation = 3;
-        else if (_body.velocity.y < -0.5)
+        else if (_body.velocity.y < -2)
             animation = 4;
-        else if (_body.velocity.x > 0.5 || _body.velocity.x < -0.5)
+        else if (_body.velocity.x > 2 || _body.velocity.x < -2)
             animation = 5;
         else
             animation = 6;
-
-        //if (lastAnimation == animation)
-        //    return;
 
         lastAnimation = animation;
         animator.SetBool("Dashing", false);
@@ -245,7 +242,7 @@ public class PlayerController : MonoBehaviour
             recentlyJumped = 0;
             recentlyTouched = 0;
         }
-        else if (doubleJump && chargedDouble)
+        else if (doubleJump && chargedDouble && GameManager.Instance.GetIndex() == 0)
         {
             _body.velocity = new Vector2(_body.velocity.x, jumpHigh);
             recentlyJumped = 0;
