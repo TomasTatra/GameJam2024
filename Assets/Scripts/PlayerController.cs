@@ -1,6 +1,5 @@
 using MarkusSecundus.Utils.Behaviors.Cosmetics;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private List<Sprite> _sprites;
 
     [SerializeField]
-    private List<AnimatorController> _animatorControllers;
+    private List<RuntimeAnimatorController> _animatorControllers;
 
     public Camera camera = null;
 
