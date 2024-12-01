@@ -1,4 +1,5 @@
 using DG.Tweening;
+using MarkusSecundus.Utils.Behaviors.GameObjects;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -22,16 +23,30 @@ public class GameManager : MonoBehaviour
     private List<TileBase> _spikeTileRules;
 
     [SerializeField]
-    private Tilemap _breakableTilemap;
+    private AreaManager _areaManager;
+    
+    private Tilemap _breakableTilemap => _areaManager.CurrentInstance.GetComponent<Tilemap>();
 
     [SerializeField]
     private List<TileBase> _breakableTileRules;
+
+    [SerializeField]
+    private SpriteRenderer _background;
+
+    [SerializeField]
+    private List<Sprite> _backgroundImages;
+
 
     [SerializeField]
     private Color _transitionColor = new Color(1, 0, 0, 1);
 
     [SerializeField]
     private float _transitionDuration = 0.1f;
+
+    [SerializeField]
+    private PlayerController _playerController;
+
+
     public static GameManager Instance { get; private set; }
 
     private int index = 0; // temporary
@@ -56,6 +71,31 @@ public class GameManager : MonoBehaviour
 
             // here change the state depending on what you need
             UpdateTileMaps();
+            UpdateCharacterSkills();
+        }
+    }
+
+    private void UpdateCharacterSkills()
+    {
+
+        //very awful code, no time throw it into a dictionary or something though
+        switch (index)
+        {
+            case 0:
+                _playerController.doubleJump = true;
+                _playerController.dash = false;
+                _playerController.strike = false;
+                break;
+            case 1:
+                _playerController.doubleJump = false;
+                _playerController.dash = true;
+                _playerController.strike = false;
+                break;
+            case 2:
+                _playerController.doubleJump = false;
+                _playerController.dash = false;
+                _playerController.strike = true;
+                break;
         }
     }
 
@@ -64,7 +104,7 @@ public class GameManager : MonoBehaviour
         DOTween.To(() => _baseTilemap.color,
             x => _baseTilemap.color = x,
             _transitionColor,
-            _transitionDuration);
+            _transitionDuration).SetEase(Ease.InOutBounce);
 
         // Its not effective but this will have to do for now
         foreach (Vector3Int position in _baseTilemap.cellBounds.allPositionsWithin)
@@ -80,15 +120,27 @@ public class GameManager : MonoBehaviour
         DOTween.To(() => _baseTilemap.color,
             x => _baseTilemap.color = x,
             new Color(1, 1, 1, 1),
-            _transitionDuration).SetDelay(_transitionDuration);
+            _transitionDuration).SetDelay(_transitionDuration).SetEase(Ease.InOutBounce);
 
 
         foreach (Vector3Int position in _spikeTilemap.cellBounds.allPositionsWithin)
         {
-            if (_spikeTilemap.GetTile(position) != null)
+            if (_spikeTilemap.HasTile(position))
             {
                 _spikeTilemap.SetTile(position, _spikeTileRules[index]);
             }
         }
+
+        foreach (Vector3Int position in _breakableTilemap.cellBounds.allPositionsWithin)
+        {
+            if (_breakableTilemap.HasTile(position))
+            {
+                //_baseTilemap.GetTile(position).
+                _breakableTilemap.SetTile(position, _breakableTileRules[index]);
+            }
+        }
+
+        // set background image
+        _background.sprite = _backgroundImages[index];
     }
 }

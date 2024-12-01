@@ -1,4 +1,5 @@
 using MarkusSecundus.Utils.Extensions;
+using System;
 using UnityEngine;
 
 namespace MarkusSecundus.Utils.Behaviors.GameObjects
@@ -15,7 +16,7 @@ namespace MarkusSecundus.Utils.Behaviors.GameObjects
         /// <summary>
         /// Currently active instance of the scene segment
         /// </summary>
-        private GameObject CurrentInstance;
+        public GameObject CurrentInstance {  get; private set; }
 
         // Start is called before the first frame update
         void Start()
