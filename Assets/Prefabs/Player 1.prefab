@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3058599510330527815}
   - component: {fileID: 8665179057247381288}
   - component: {fileID: 9117689026545189666}
+  - component: {fileID: 3145725950562135789}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -208,11 +209,35 @@ MonoBehaviour:
     m_ActionId: c53f3462-836b-41f8-969f-1e507cde2173
     m_ActionName: Character/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9117689026545189666}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: fdc515f4-2ae3-434f-a558-de5a4334d18d
     m_ActionName: Character/Dash[/Keyboard/leftShift]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9117689026545189666}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnStrike
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: cbe18e7a-9717-4392-a626-8744e25514ff
     m_ActionName: Character/Attack
   m_NeverAutoSwitchControlSchemes: 0
@@ -237,8 +262,38 @@ MonoBehaviour:
   jumpHigh: 9
   coyoteTime: 0.7
   jumpBuffer: 0.7
+  gravity: 1
   jumpVelocityCut: 2
   jumpCutMulltiplier: 2
   jumpForce: 40
   jumpFraction: 8
   time: 1
+  doubleJump: 1
+  dash: 1
+  dashSpeed: 8
+  dashTime: 2
+  dashColldown: 3
+  strike: 1
+  strikeTime: 1
+  strikeColldown: 3
+--- !u!95 &3145725950562135789
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3125820426824289835}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: afb4374a9d1e0a04b8a775c9d52d0e66, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
