@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerController _playerController;
 
+    private SoundtrackManager _soundtrackManager;
 
     public static GameManager Instance { get; private set; }
 
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        _soundtrackManager = Object.FindAnyObjectByType<SoundtrackManager>();
     }
 
     public void StateChanged(InputAction.CallbackContext context)
@@ -72,6 +74,7 @@ public class GameManager : MonoBehaviour
             // here change the state depending on what you need
             UpdateTileMaps();
             UpdateCharacterSkills();
+            _soundtrackManager.SwitchToWorld(index);
         }
     }
 

@@ -30,9 +30,10 @@ public class Spikes : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        var player = collision.attachedRigidbody.GetComponent<PlayerController>();
+        if (player)
         {
-            // Do the respawning here
+            player.KillPlayer();
         }
     }
 
