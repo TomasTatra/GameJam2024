@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: tilemap_bw_handdrawn_32
+  m_Name: grayscale_spike_tile
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 813922557, guid: 7c254db9c97f3a24bafe06625f5e870c, type: 3}
+  m_Sprite: {fileID: 1971868381, guid: 6b06d8f613d06ef4f80fe5ffe24ccf11, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
