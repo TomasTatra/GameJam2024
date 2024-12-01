@@ -1,19 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
+    public float distance = 500;
+    public float speed = 500;
+    private int _direction;
+    private float _start;
+  
+    public void SetDirection(int dir) { _direction = dir; _start = this.transform.position.x; }
 
-    // Update is called once per frame
     void Update()
     {
-
+        this.transform.position += new Vector3(speed * Time.deltaTime * _direction, 0, 0);
+        if (_start - this.transform.position.x > distance)
+            Destroy(gameObject);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
