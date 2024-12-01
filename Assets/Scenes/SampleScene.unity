@@ -254,6 +254,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9117689026545189666, guid: 020f037b062b16941813d4dbbfcff3a9, type: 3}
+      propertyPath: _alive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9117689026545189666, guid: 020f037b062b16941813d4dbbfcff3a9, type: 3}
       propertyPath: camera
       value: 
       objectReference: {fileID: 519420031}
@@ -261,6 +265,10 @@ PrefabInstance:
       propertyPath: _fadeTween
       value: 
       objectReference: {fileID: 1834880358}
+    - target: {fileID: 9117689026545189666, guid: 020f037b062b16941813d4dbbfcff3a9, type: 3}
+      propertyPath: strikeOffset
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9117689026545189666, guid: 020f037b062b16941813d4dbbfcff3a9, type: 3}
       propertyPath: timeToRestartAbilities
       value: 1

@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     [Space(10)]
     public bool strike = false;
     public float strikeTime = 1;
+    public float strikeOffset = 10;
     private bool strikeCall = false;
     public float strikeColddown = 3;
     private float strikeDuration = 0;
@@ -196,7 +197,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (_alive && strikeCall || dashCall)
+        if (_alive && (dashCall || strikeCall))
             return;
         Vector2 direction = context.ReadValue<Vector2>();
         animator.SetFloat("Speed", Mathf.Abs(direction.x));
@@ -219,7 +220,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (_alive && dashCall || strikeCall)
+        if (_alive && (dashCall || strikeCall))
             return;
         if (context.started)
         {
@@ -249,9 +250,14 @@ public class PlayerController : MonoBehaviour
             Fire();
         }
     }
+
+    [SerializeField] Projectile projectilePrefab;
     private void Fire()
     {
-        return;
+        var projectile = Instantiate(projectilePrefab);
+        projectile.transform.position = _body.transform.position + new Vector3(strikeOffset * (spriteRenderer.flipX?-1:1), 0, 0);
+        projectile.SetDirection(spriteRenderer.flipX ? -1 : 1);
+        
     }
 
     public void KillPlayer()

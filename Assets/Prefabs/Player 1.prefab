@@ -257,10 +257,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1346aad57c0f3334cb99bbb26b9eb9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _alive: 0
   camera: {fileID: 0}
-  fadeTween: {fileID: 0}
   fadeTime: 0.33
+  _alive: 0
+  _fadeTween: {fileID: 0}
   speed: 4
   jumpHigh: 9
   coyoteTime: 0.7
@@ -280,6 +280,7 @@ MonoBehaviour:
   strike: 1
   strikeTime: 1
   strikeColddown: 3
+  projectilePrefab: {fileID: 3808601583493664672, guid: b69e0c22164862c47803a59c44f78b5f, type: 3}
 --- !u!95 &3145725950562135789
 Animator:
   serializedVersion: 5
