@@ -21,6 +21,7 @@ namespace MarkusSecundus.Utils.Behaviors.GameObjects
         // Start is called before the first frame update
         void Start()
         {
+            Prototype.SetActive(false);
             Reload();
         }
 
@@ -32,6 +33,7 @@ namespace MarkusSecundus.Utils.Behaviors.GameObjects
             if (CurrentInstance != null) Unload(); 
 
             CurrentInstance = Prototype.InstantiateWithTransform(copyScale: true);
+            CurrentInstance.SetActive(true);
         }
         /// <summary>
         /// Destroy current instance of the scene segment
