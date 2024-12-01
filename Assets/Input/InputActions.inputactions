@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash",
+                    "name": "Ability",
                     "type": "Button",
                     "id": "fdc515f4-2ae3-434f-a558-de5a4334d18d",
                     "expectedControlType": "",
@@ -33,16 +33,25 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Attack",
+                    "name": "FirstState",
                     "type": "Button",
-                    "id": "cbe18e7a-9717-4392-a626-8744e25514ff",
+                    "id": "2fc48e0e-32b6-4187-a01d-3d75eab29ae5",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ChangeState",
+                    "name": "SecondState",
+                    "type": "Button",
+                    "id": "641d3a85-643e-4211-a525-bbae5c0d9b57",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ThirdState",
                     "type": "Button",
                     "id": "6f40f5ee-e788-45af-8cae-bfe6e8fe8c08",
                     "expectedControlType": "",
@@ -70,18 +79,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "34d8abe0-8b6d-4fcf-b6bb-4380e1084df4",
-                    "path": "<Keyboard>/leftCtrl",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Attack",
+                    "action": "Ability",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -120,12 +118,67 @@
                 },
                 {
                     "name": "",
-                    "id": "3fe3290e-4a7e-434f-8fee-e7eb99c2c367",
-                    "path": "<Keyboard>/e",
+                    "id": "cef41006-0b55-4570-a9a6-04e5697cc695",
+                    "path": "<Keyboard>/numpad3",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ChangeState",
+                    "action": "ThirdState",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83175d94-1369-4710-96af-7fb923390c86",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThirdState",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb40ec0e-e3d3-4d6b-8264-3aa82a7c025f",
+                    "path": "<Keyboard>/numpad1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FirstState",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "38780e52-19fc-492f-a9e4-3f66313894ce",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FirstState",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3fe3290e-4a7e-434f-8fee-e7eb99c2c367",
+                    "path": "<Keyboard>/numpad2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SecondState",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a73d845a-8bb8-44c3-9d31-dbbfd8f4586a",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SecondState",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

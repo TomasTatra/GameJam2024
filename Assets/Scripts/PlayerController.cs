@@ -228,9 +228,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnDash(InputAction.CallbackContext context)
+    public void OnAbility(InputAction.CallbackContext context)
     {
-        if (_alive && context.started && dash && !dashCall && chargedDash)
+        if (context.started && _alive)
+        {
+            if (GameManager.Instance.GetIndex() == 1)
+                OnDash();
+            if (GameManager.Instance.GetIndex() == 2)
+                OnStrike();
+        }
+    }
+
+    public void OnDash()
+    {
+        if (dash && !dashCall && chargedDash)
         {
             dashCall = true;
             dashDuration = dashTime;
@@ -239,9 +250,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnStrike(InputAction.CallbackContext context)
+    public void OnStrike()
     {
-        if (_alive && context.started && strike && !strikeCall && chargedStrike)
+        if (strike && !strikeCall && chargedStrike)
         {
             strikeCall = true;
             strikeDuration = strikeTime;

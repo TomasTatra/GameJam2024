@@ -63,16 +63,38 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StateChanged(InputAction.CallbackContext context)
+    public void FirstStateChanged(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            index = (index + 1) % _baseTileRules.Count;
-
-            // here change the state depending on what you need
-            UpdateTileMaps();
-            UpdateCharacterSkills();
+            index = 0;
+            StateChanged();
         }
+    }
+
+    public void SecondStateChanged(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            index = 1;
+            StateChanged();
+        }
+    }
+
+    public void ThirdStateChanged(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            index = 2;
+            StateChanged();
+        }
+    }
+
+
+    private void StateChanged()
+    {
+        UpdateTileMaps();
+        UpdateCharacterSkills();
     }
 
     private void UpdateCharacterSkills()
@@ -97,6 +119,11 @@ public class GameManager : MonoBehaviour
                 _playerController.strike = true;
                 break;
         }
+    }
+
+    public int GetIndex()
+    {
+        return index;
     }
 
     private void UpdateTileMaps()
