@@ -19,10 +19,10 @@ public class Projectile : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(gameObject);
-        if (collision.gameObject.CompareTag("Breakable")) 
-        {
-            Destroy(collision.gameObject);
-        }
+        //Destroy(gameObject);
+        //if (collision.gameObject.CompareTag("Breakable")) 
+        //{
+        //    Destroy(collision.gameObject);
+        //}
     }
 }
