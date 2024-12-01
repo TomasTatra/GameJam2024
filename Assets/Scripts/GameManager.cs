@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
             UpdateTileMaps();
             UpdateCharacterSkills();
             _soundtrackManager.SwitchToWorld(index);
+            _playerController.SetCharacter(index);
         }
     }
 

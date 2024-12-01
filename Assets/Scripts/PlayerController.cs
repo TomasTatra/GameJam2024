@@ -1,4 +1,6 @@
 using MarkusSecundus.Utils.Behaviors.Cosmetics;
+using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +9,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _body;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+
+    [SerializeField]
+    private List<Sprite> _sprites;
+
+    [SerializeField]
+    private List<AnimatorController> _animatorControllers;
 
     public Camera camera = null;
 
@@ -265,6 +273,12 @@ public class PlayerController : MonoBehaviour
         if (!_alive) return;
         _alive = false;
         TurnOffCamera();
+    }
+
+    public void SetCharacter(int index)
+    {
+        spriteRenderer.sprite = _sprites[index];
+        animator.runtimeAnimatorController = _animatorControllers[index];
     }
 
     public void SetLastCheckpoint(Vector2 position)
